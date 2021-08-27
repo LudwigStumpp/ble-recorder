@@ -4,7 +4,7 @@ const app = new Vue({
     el: '#app',
     data: {
         serviceUUID: '',
-        messageFormat: 'val1;val2;val3',
+        messageFormat: 'ts;val1;val2;val3',
         delimiter: ';',
         isConnected: false,
         isRecording: false,
@@ -15,6 +15,7 @@ const app = new Vue({
         recordingTime: 5,
         preparationTime: 3,
         timer: 0,
+        addExtraTimestamp: false,
     },
     created() {
         this.myBLE = new p5ble();
@@ -68,12 +69,16 @@ const app = new Vue({
             values.forEach((value, index) => {
                 value_name = this.names[index];
                 Vue.set(this.parsed, value_name, value);
-            })
+            });
             if (this.isRecording && this.recordingStartsIn == 0) {
                 values = data.split(this.delimiter);
-                storage[0].push(Date.now());
+                let offset = 0;
+                if (this.addExtraTimestamp) {
+                    storage[0].push(Date.now());
+                    offset = 1;
+                }
                 values.forEach((value, index) => {
-                    storage[index + 1].push(value);
+                    storage[index + offset].push(value);
                 });
             }
         },
@@ -85,7 +90,8 @@ const app = new Vue({
                 element.scrollIntoView(true);
             }, 100);
 
-            storage = new Array(1 + this.names.length);
+            storageLength = this.addExtraTimestamp ? 1 + this.names.length : this.names.length;
+            storage = new Array(storageLength);
             for (let i = 0; i < storage.length; i++) {
                 storage[i] = new Array();
             }
@@ -96,12 +102,18 @@ const app = new Vue({
         downloadData: function () {
             // console.log(storage);
             // storage is [feature][data_point]
+            // implementation from https://stackoverflow.com/a/14966131
 
             let rows = new Array(storage[0].length + 1);
-            rows[0] = ['ts'].concat(this.names);
+            first_row = this.names;
+            if (this.addExtraTimestamp) {
+                first_row = ['unix_ts_from_web'].concat(first_row);
+            }
+            rows[0] = first_row;
 
             for (let row_index = 1; row_index < rows.length; row_index++) {
-                rows[row_index] = new Array(this.names.length + 1);
+                let offset = this.addExtraTimestamp ? 1 : 0;
+                rows[row_index] = new Array(this.names.length + offset);
                 for (let column_index = 0; column_index < storage.length; column_index++) {
                     rows[row_index][column_index] = storage[column_index][row_index - 1];
                 }
@@ -109,8 +121,12 @@ const app = new Vue({
 
             const csvContent = "data:text/csv;charset=utf-8," + rows.map(e => e.join(",")).join("\n");
             const encodedUri = encodeURI(csvContent);
-            console.log(encodedUri);
-            window.open(encodedUri);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "recorded_data.csv");
+            document.body.appendChild(link); // Required for FF
+
+            link.click();
         }
     }
 })
