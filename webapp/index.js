@@ -8,7 +8,8 @@ const app = new Vue({
         isRecording: false,
         myCharacteristic: null,
         myBLE: null,
-        log: '',
+        log: null,
+        parsed: {},
     },
     created() {
         this.myBLE = new p5ble();
@@ -20,6 +21,7 @@ const app = new Vue({
     },
     methods: {
         connectBLE: function () {
+            this.parsed = {};
             this.myBLE.connect(this.serviceUUID, this.gotCharacteristics);
         },
         disconnectBLE: function () {
@@ -37,13 +39,12 @@ const app = new Vue({
         },
         handleNotifications: function (data) {
             if (!this.isRecording) {
+                this.log = data;
                 values = data.split(this.delimiter);
-                output_str = '';
                 values.forEach((value, index) => {
                     value_name = this.names[index];
-                    output_str += value_name + ': ' + value + ' ';
+                    Vue.set(this.parsed, value_name, value);
                 })
-                this.log = output_str
             } else {
 
             }

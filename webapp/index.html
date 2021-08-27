@@ -60,9 +60,17 @@
                         <form onsubmit="return false;">
                             <div class="form-group row">
                                 <div class="col-sm-12">
-                                    <label>Log:</label>
-                                    <p type="text" class="form-control" id="log">
+                                    <label>Raw Data</label>
+                                    <p type="text" class="form-control">
                                         {{log}}
+                                    <p>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-4" v-for="(value, name) in parsed">
+                                    <label>{{name}}:</label>
+                                    <p type="text" class="form-control">
+                                        {{value}}
                                     <p>
                                 </div>
                             </div>
