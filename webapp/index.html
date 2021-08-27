@@ -19,8 +19,8 @@
                 <div class="col-md-10 mx-auto">
                     <h1>BLE Recorder</h1>
                     <p>To be filled.</p>
-                    <h5 class="mt-5">1. Step - Specify Connection Details and Message Format</h5>
-                    <form class="mt-3" onsubmit="return false;">
+                    <h5 class="mt-5 mb-3" mb-3>1. Step - Specify Connection Details and Message Format</h5>
+                    <form onsubmit="return false;">
                         <div class="form-group row">
                             <div class="col-sm-12">
                                 <label for="serviveUUID">Service UUID:</label>
@@ -52,23 +52,80 @@
 
             <div class="row">
                 <div class="col-md-10 mx-auto">
-                    <h5 class="mt-5">2. Step - Check the Connection and specify Recording Details</h5>
-                    <label for="log">Log:</label>
-                    <p type="text" class="form-control h-50 overflow-auto" id="log">
-                    <form class="mt-3" onsubmit="return false;">
+                    <h5 class="mt-5 mb-3">2. Step - Check the Connection and specify Recording Details</h5>
+                    <form onsubmit="return false;">
                         <div class="form-group row">
+                            <div class="col-sm-12">
+                                <label>Log:</label>
+                                <div type="text" style="height: 200px !important; overflow-y: scroll;"
+                                    class="overflow-auto form-control" id="log">
+                                    <ul class="pl-0" style="list-style: none;">
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-6">
+                                <label for="preparationTime">Preparation Time:</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control" id="preparationTime" placeholder="15"
+                                        min=0>
+                                    <div class="input-group-append">
+                                        <div class="input-group-text">s</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <label for="recordingTime">Recording Time:</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control" id="recordingTime" placeholder="30" min=1>
+                                    <div class="input-group-append">
+                                        <div class="input-group-text">s</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-12">
+                                <label class="d-block">Start the Recording:</label>
+                                <button type="button" class="btn btn-success px-4">Start</button>
+                                <button type="button" class="btn btn-danger px-4">Stop</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
 
+            <hr />
+
+            <div class="row">
+                <div class="col-md-10 mx-auto">
+                    <h5 class="mt-5 mb-3">3. Step - Wait until Recording has finished</h5>
+                    <form onsubmit="return false;">
+                        <div class="form-group row">
+                            <div class="col-sm-4">
+                                <label>Recording starts in:</label>
+                                <p class="form-control" id="recordingCountdown">
+                            </div>
+                            <div class="col-sm-4">
+                                <label>Recording Duration:</label>
+                                <p class="form-control" id="recordingDuration">
+                            </div>
+                            <div class="col-sm-4">
+                                <label>Recording Time left:</label>
+                                <p class="form-control" id="RecordingLeft">
+                            </div>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
 
-        <div class="navbar fixed-bottom bg-dark">
+        <footer class="navbar fixed-bottom bg-dark">
             <div class="text-white">Made with <span class="fa fa-heart text-danger"></span> in
                 Bavaria by <a href="https://ludwigstumpp.com" target="_blank">Ludwig Stumpp</a>.
             </div>
-        </div>
+        </footer>
 
         <script src="./webapp/sketch.js"></script>
     </body>
