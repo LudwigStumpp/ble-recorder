@@ -2,9 +2,10 @@
 #include <Arduino_LSM9DS1.h>
 
 float accelX, accelY, accelZ;
+unsigned long myTime;
 
 BLEService accelService("4119d95e-ebbc-4df8-8e11-a41dcbf6675e");
-BLEStringCharacteristic accelCharacteristic("12b66e62-df52-462d-bda5-03c6ce4942ea", BLERead | BLENotify, 17);
+BLEStringCharacteristic accelCharacteristic("12b66e62-df52-462d-bda5-03c6ce4942ea", BLERead | BLENotify, 28);
 
 void setup() {
   IMU.begin();
@@ -36,13 +37,17 @@ void loop() {
     Serial.println(central.address());
     digitalWrite(LED_BUILTIN, HIGH);
     while (central.connected()) {
-      // delay(100);
+      // delay(1);
+      
       read_Accel();
+      myTime = millis();
 
       String del = ";";
-      String msg = String(accelX) + del + String(accelY) + del + String(accelZ);
+      String msg = String(myTime) + del + String(accelX) + del + String(accelY) + del + String(accelZ);
       accelCharacteristic.writeValue(msg);
-      
+
+      Serial.print(myTime);
+      Serial.print('\t');
       Serial.print(accelX);
       Serial.print('\t');
       Serial.print(accelY);
