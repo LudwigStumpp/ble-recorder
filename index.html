@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
         integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
     <script src="https://unpkg.com/p5ble@0.0.4/dist/p5.ble.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
@@ -19,7 +18,11 @@
             <div class="row">
                 <div class="col-md-10 mx-auto">
                     <h1>BLE Recorder</h1>
-                    <p>Web-based Tool for Recording BLE Data into a .csv - Dataset.</p>
+                    <p>A Web-based Tool for recording BLE Data into a .csv - Dataset. <br>
+                        Note: The Web Bluetooth API, that this tool is based on, is only supported in the <a
+                            target="_blank"
+                            href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Bluetooth_API#browser_compatibility">here</a>
+                        listed browsers.</p>
                     <h5 class="mt-5 mb-3" mb-3>1. Step - Specify Connection Details and Message Format</h5>
                     <form onsubmit="return false;">
                         <div class="form-group row">
