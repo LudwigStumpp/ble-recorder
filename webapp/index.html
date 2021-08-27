@@ -45,8 +45,9 @@
                         <div class="form-group row">
                             <div class="col-sm-12">
                                 <label class='d-block'>Establish the Connection:</label>
-                                <input @click="connectBLE" type="submit" value="Connect" class="btn btn-success px-4">
-                                <button @click="disconnectBLE" type="button"
+                                <input @click="connectBLE" type="submit" value="Connect" class="btn btn-success px-4"
+                                    :disabled="isConnected">
+                                <button @click="disconnectBLE" type="button" :disabled="!isConnected"
                                     class="btn btn-danger px-4">Disconnect</button>
                             </div>
                         </div>
@@ -103,9 +104,9 @@
                             <div class="form-group row">
                                 <div class="col-sm-12">
                                     <label class="d-block">Start the Recording:</label>
-                                    <input @click="startRecording" type="button" value="Start"
+                                    <input @click="startRecording" type="button" value="Start" :disabled="isRecording"
                                         class="btn btn-success px-4">
-                                    <button @click="stopRecording" type="button"
+                                    <button @click="stopRecording" type="button" :disabled="!isRecording"
                                         class="btn btn-danger px-4">Stop</button>
                                 </div>
                             </div>
