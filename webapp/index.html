@@ -103,6 +103,15 @@
                             </div>
                             <div class="form-group row">
                                 <div class="col-sm-12">
+                                    <input type="checkbox" id="addExtraTimestamp" v-model="addExtraTimestamp"
+                                        placeholder="{{addExtraTimestamp}}" required :disabled="isRecording">
+                                    <label class="form-check-label" for="addExtraTimestamp">Add additional
+                                        UNIX - Timestamp? (Use only if peripheral device does not send
+                                        timestamp!)</label>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-12">
                                     <label class="d-block">Start the Recording:</label>
                                     <input @click="startRecording" type="button" value="Start" :disabled="isRecording"
                                         class="btn btn-success px-4">
