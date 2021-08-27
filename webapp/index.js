@@ -80,6 +80,10 @@ const app = new Vue({
         startRecording: function () {
             this.timer = parseInt(this.preparationTime) + parseInt(this.recordingTime);
             this.isRecording = true;
+            setTimeout(() => {
+                element = document.getElementById("last-element");
+                element.scrollIntoView(true);
+            }, 100);
 
             storage = new Array(1 + this.names.length);
             for (let i = 0; i < storage.length; i++) {
