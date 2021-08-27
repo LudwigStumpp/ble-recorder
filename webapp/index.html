@@ -19,12 +19,12 @@
             <div class="row">
                 <div class="col-md-10 mx-auto">
                     <h1>BLE Recorder</h1>
-                    <p>To be filled.</p>
+                    <p>Web-based Tool for Recording BLE Data into a .csv - Dataset.</p>
                     <h5 class="mt-5 mb-3" mb-3>1. Step - Specify Connection Details and Message Format</h5>
                     <form onsubmit="return false;">
                         <div class="form-group row">
                             <div class="col-sm-12">
-                                <label for="serviveUUID">Service UUID:</label>
+                                <label for="serviveUUID">Service UUID of Peripheral:</label>
                                 <input type="text" class="form-control" id="serviveUUID" v-model="serviceUUID"
                                     :disabled="isConnected" required>
                             </div>
@@ -70,7 +70,7 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <div class="col-sm-4" v-for="(value, name) in parsed">
+                                <div class="col-sm-3" v-for="(value, name) in parsed">
                                     <label>{{name}}:</label>
                                     <p type="text" class="form-control">
                                         {{value}}
