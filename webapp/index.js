@@ -63,14 +63,13 @@ const app = new Vue({
             this.myBLE.startNotifications(this.myCharacteristic, this.handleNotifications, 'string');
         },
         handleNotifications: function (data) {
-            if (!this.isRecording) {
-                this.log = data;
-                values = data.split(this.delimiter);
-                values.forEach((value, index) => {
-                    value_name = this.names[index];
-                    Vue.set(this.parsed, value_name, value);
-                })
-            } else if (this.recordingStartsIn == 0) {
+            this.log = data;
+            values = data.split(this.delimiter);
+            values.forEach((value, index) => {
+                value_name = this.names[index];
+                Vue.set(this.parsed, value_name, value);
+            })
+            if (this.isRecording && this.recordingStartsIn == 0) {
                 values = data.split(this.delimiter);
                 storage[0].push(Date.now());
                 values.forEach((value, index) => {
@@ -79,8 +78,8 @@ const app = new Vue({
             }
         },
         startRecording: function () {
-            this.isRecording = true;
             this.timer = parseInt(this.preparationTime) + parseInt(this.recordingTime);
+            this.isRecording = true;
 
             storage = new Array(1 + this.names.length);
             for (let i = 0; i < storage.length; i++) {
