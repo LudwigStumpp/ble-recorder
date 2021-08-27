@@ -83,21 +83,22 @@ const app = new Vue({
             }
         },
         startRecording: function () {
+            storageLength = this.addExtraTimestamp ? 1 + this.names.length : this.names.length;
+            storage = new Array(storageLength);
+            for (let i = 0; i < storage.length; i++) {
+                storage[i] = new Array();
+            }
+
             this.timer = parseInt(this.preparationTime) + parseInt(this.recordingTime);
             this.isRecording = true;
             setTimeout(() => {
                 element = document.getElementById("last-element");
                 element.scrollIntoView(true);
             }, 100);
-
-            storageLength = this.addExtraTimestamp ? 1 + this.names.length : this.names.length;
-            storage = new Array(storageLength);
-            for (let i = 0; i < storage.length; i++) {
-                storage[i] = new Array();
-            }
         },
         stopRecording: function () {
             this.isRecording = false;
+            this.storage = [];
         },
         downloadData: function () {
             // console.log(storage);
