@@ -4,7 +4,7 @@
 float accelX, accelY, accelZ;
 
 BLEService accelService("4119d95e-ebbc-4df8-8e11-a41dcbf6675e");
-BLEStringCharacteristic accelCharacteristic("12b66e62-df52-462d-bda5-03c6ce4942ea", BLERead | BLENotify, 14);
+BLEStringCharacteristic accelCharacteristic("12b66e62-df52-462d-bda5-03c6ce4942ea", BLERead | BLENotify, 17);
 
 void setup() {
   IMU.begin();
@@ -39,7 +39,8 @@ void loop() {
       // delay(100);
       read_Accel();
 
-      String msg = String(accelX) + "," + String(accelY) + "," + String(accelZ);
+      String del = ";";
+      String msg = String(accelX) + del + String(accelY) + del + String(accelZ);
       accelCharacteristic.writeValue(msg);
       
       Serial.print(accelX);

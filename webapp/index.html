@@ -6,6 +6,7 @@
     <meta charset="utf-8">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
         integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
     <script src="https://unpkg.com/p5ble@0.0.4/dist/p5.ble.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -24,110 +25,112 @@
                         <div class="form-group row">
                             <div class="col-sm-12">
                                 <label for="serviveUUID">Service UUID:</label>
-                                <input type="text" class="form-control" id="serviveUUID">
+                                <input type="text" class="form-control" id="serviveUUID" v-model="serviceUUID">
                             </div>
                         </div>
                         <div class="form-group row">
                             <div class="col-sm-8">
                                 <label for="messageFormat">Message Format:</label>
-                                <input type="text" class="form-control" id="messageFormat" placeholder="val1;val2;val3">
+                                <input type="text" class="form-control" id="messageFormat"
+                                    placeholder="{{messageFormat}}" v-model="messageFormat">
                             </div>
                             <div class="col-sm-4">
                                 <label for="valueDelimiter">Delimiter Symbol:</label>
-                                <input type="text" class="form-control" id="valueDelimiter" placeholder=";">
+                                <input type="text" class="form-control" id="valueDelimiter" placeholder="{{delimiter}}"
+                                    v-model="delimiter">
                             </div>
                         </div>
                         <div class="form-group row">
                             <div class="col-sm-12">
                                 <label class='d-block'>Establish the Connection:</label>
-                                <button type="button" class="btn btn-success px-4">Connect</button>
-                                <button type="button" class="btn btn-danger px-4">Disconnect</button>
+                                <button @click="connectBLE" type="button" class="btn btn-success px-4">Connect</button>
+                                <button @click="disconnectBLE" type="button"
+                                    class="btn btn-danger px-4">Disconnect</button>
                             </div>
                         </div>
                     </form>
                 </div>
             </div>
 
-            <hr />
-
-            <div class="row">
-                <div class="col-md-10 mx-auto">
-                    <h5 class="mt-5 mb-3">2. Step - Check the Connection and specify Recording Details</h5>
-                    <form onsubmit="return false;">
-                        <div class="form-group row">
-                            <div class="col-sm-12">
-                                <label>Log:</label>
-                                <div type="text" style="height: 200px !important; overflow-y: scroll;"
-                                    class="overflow-auto form-control" id="log">
-                                    <ul class="pl-0" style="list-style: none;">
-                                    </ul>
+            <div v-if="isConnected">
+                <hr />
+                <div class="row">
+                    <div class="col-md-10 mx-auto">
+                        <h5 class="mt-5 mb-3">2. Step - Check the Connection and specify Recording Details</h5>
+                        <form onsubmit="return false;">
+                            <div class="form-group row">
+                                <div class="col-sm-12">
+                                    <label>Log:</label>
+                                    <p type="text" class="form-control" id="log">
+                                        {{log}}
+                                    <p>
                                 </div>
                             </div>
-                        </div>
-                        <div class="form-group row">
-                            <div class="col-sm-6">
-                                <label for="preparationTime">Preparation Time:</label>
-                                <div class="input-group">
-                                    <input type="number" class="form-control" id="preparationTime" placeholder="15"
-                                        min=0>
-                                    <div class="input-group-append">
-                                        <div class="input-group-text">s</div>
+                            <div class="form-group row">
+                                <div class="col-sm-6">
+                                    <label for="preparationTime">Preparation Time:</label>
+                                    <div class="input-group">
+                                        <input type="number" class="form-control" id="preparationTime" placeholder="15"
+                                            min=0>
+                                        <div class="input-group-append">
+                                            <div class="input-group-text">s</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <label for="recordingTime">Recording Time:</label>
+                                    <div class="input-group">
+                                        <input type="number" class="form-control" id="recordingTime" placeholder="30"
+                                            min=1>
+                                        <div class="input-group-append">
+                                            <div class="input-group-text">s</div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-6">
-                                <label for="recordingTime">Recording Time:</label>
-                                <div class="input-group">
-                                    <input type="number" class="form-control" id="recordingTime" placeholder="30" min=1>
-                                    <div class="input-group-append">
-                                        <div class="input-group-text">s</div>
-                                    </div>
+                            <div class="form-group row">
+                                <div class="col-sm-12">
+                                    <label class="d-block">Start the Recording:</label>
+                                    <button type="button" class="btn btn-success px-4">Start</button>
+                                    <button type="button" class="btn btn-danger px-4">Stop</button>
                                 </div>
                             </div>
-                        </div>
-                        <div class="form-group row">
-                            <div class="col-sm-12">
-                                <label class="d-block">Start the Recording:</label>
-                                <button type="button" class="btn btn-success px-4">Start</button>
-                                <button type="button" class="btn btn-danger px-4">Stop</button>
-                            </div>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
 
-            <hr />
-
-            <div class="row">
-                <div class="col-md-10 mx-auto">
-                    <h5 class="mt-5 mb-3">3. Step - Wait until Recording has finished</h5>
-                    <form onsubmit="return false;">
-                        <div class="form-group row">
-                            <div class="col-sm-4">
-                                <label>Recording starts in:</label>
-                                <p class="form-control" id="recordingCountdown">
+            <div v-if="isRecording">
+                <hr />
+                <div class="row">
+                    <div class="col-md-10 mx-auto">
+                        <h5 class="mt-5 mb-3">3. Step - Wait until Recording has finished</h5>
+                        <form onsubmit="return false;">
+                            <div class="form-group row">
+                                <div class="col-sm-4">
+                                    <label>Recording starts in:</label>
+                                    <p class="form-control" id="recordingCountdown">
+                                </div>
+                                <div class="col-sm-4">
+                                    <label>Recording Duration:</label>
+                                    <p class="form-control" id="recordingDuration">
+                                </div>
+                                <div class="col-sm-4">
+                                    <label>Recording Time left:</label>
+                                    <p class="form-control" id="RecordingLeft">
+                                </div>
                             </div>
-                            <div class="col-sm-4">
-                                <label>Recording Duration:</label>
-                                <p class="form-control" id="recordingDuration">
-                            </div>
-                            <div class="col-sm-4">
-                                <label>Recording Time left:</label>
-                                <p class="form-control" id="RecordingLeft">
-                            </div>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
-        </div>
+            <footer class="navbar fixed-bottom bg-dark">
+                <div class="text-white">Made with <span class="fa fa-heart text-danger"></span> in
+                    Bavaria by <a href="https://ludwigstumpp.com" target="_blank">Ludwig Stumpp</a>.
+                </div>
+            </footer>
 
-        <footer class="navbar fixed-bottom bg-dark">
-            <div class="text-white">Made with <span class="fa fa-heart text-danger"></span> in
-                Bavaria by <a href="https://ludwigstumpp.com" target="_blank">Ludwig Stumpp</a>.
-            </div>
-        </footer>
-
-        <script src="./webapp/sketch.js"></script>
+            <script src="index.js"></script>
     </body>
 
 </html>
