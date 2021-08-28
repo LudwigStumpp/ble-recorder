@@ -1,11 +1,14 @@
 #include <ArduinoBLE.h>
 #include <Arduino_LSM9DS1.h>
 
-float accelX, accelY, accelZ;
-unsigned long myTime;
+float accX, accY, accZ; // max. 5 characters String each (if negative)
+unsigned long myTime; // max. 10 characters String
+const String del = ";"; // 1 character
+const int strLen = 10 + 3 * 5 + 3; // + 3 for 3 delimiters
 
-BLEService accelService("4119d95e-ebbc-4df8-8e11-a41dcbf6675e");
-BLEStringCharacteristic accelCharacteristic("12b66e62-df52-462d-bda5-03c6ce4942ea", BLERead | BLENotify, 28);
+// check https://www.uuidgenerator.net/ to generate your own unique UUIDs
+BLEService accelService("TO_BE_FILLED");
+BLEStringCharacteristic accelCharacteristic("TO_BE_FILLED", BLERead | BLENotify, strLen);
 
 void setup() {
   IMU.begin();
@@ -24,7 +27,7 @@ void setup() {
   BLE.setAdvertisedService(accelService);
   accelService.addCharacteristic(accelCharacteristic);
   BLE.addService(accelService);
-  accelCharacteristic.writeValue("0.00,0.00,0.00");
+  accelCharacteristic.writeValue("1111111111;-0.00;-0.00;-0.00");
   BLE.advertise();
 
   Serial.println("Bluetooth device is now active, waiting for connections...");
@@ -38,21 +41,14 @@ void loop() {
     digitalWrite(LED_BUILTIN, HIGH);
     while (central.connected()) {
       // delay(1);
-      
+
       read_Accel();
       myTime = millis();
 
-      String del = ";";
-      String msg = String(myTime) + del + String(accelX) + del + String(accelY) + del + String(accelZ);
+      String msg = get_message();
       accelCharacteristic.writeValue(msg);
 
-      Serial.print(myTime);
-      Serial.print('\t');
-      Serial.print(accelX);
-      Serial.print('\t');
-      Serial.print(accelY);
-      Serial.print('\t');
-      Serial.println(accelZ);
+      print_to_serial();
     }
   }
   digitalWrite(LED_BUILTIN, LOW);
@@ -62,6 +58,17 @@ void loop() {
 
 void read_Accel() {
   if (IMU.accelerationAvailable()) {
-    IMU.readAcceleration(accelX, accelY, accelZ);
+    IMU.readAcceleration(accX, accY, accZ);
   }
+}
+
+void print_to_serial() {
+  Serial.print(myTime); Serial.print('\t');
+  Serial.print(accX); Serial.print('\t');
+  Serial.print(accY); Serial.print('\t');
+  Serial.print(accZ); Serial.print('\n');
+}
+
+String get_message() {
+  return String(myTime) + del + String(accX) + del + String(accY) + del + String(accZ); 
 }
