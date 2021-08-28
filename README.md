@@ -8,7 +8,7 @@ BLE-Recorder builds upon the provided functionality of [p5.ble.js](https://githu
 ## 1. General Information
 
 ### 1.1 Functionality
-This tool is based on the Bluetooth Low Energy (BLE) standard as supported through the [Web Bluetooth API]("https://developer.mozilla.org/en-US/docs/Web/API/Web_Bluetooth_API"). It allows to record information sent from a peripheral device to then be converted into a .csv file. For a introduction on BLE, please refer to [this blog post]("https://www.arduino.cc/en/Reference/ArduinoBLE") on the Arduino website.
+This tool is based on the Bluetooth Low Energy (BLE) standard as supported through the [Web Bluetooth API]("https://developer.mozilla.org/en-US/docs/Web/API/Web_Bluetooth_API"). It allows to record information sent from a peripheral device to then be converted into a .csv file. For a introduction on BLE, please refer to [this blog post](https://www.arduino.cc/en/Reference/ArduinoBLE) on the Arduino website.
 
 ### 1.2 Motivation
 This tool was initially developped to simplify the process of collecting data from your Arduino boards with BLE support. This allows more flexibility since one does not require a connection of the board with your computer, but only power connection through e.g a PowerBank.
@@ -41,8 +41,8 @@ Since any type of information can be converted to string format in some way, thi
 ### 3.2 Performance of own Tests
 The following experiments where performed on a Arduino Nano 33 BLE Sense Board with a code similar to the provided example in `arduino/ACC_BLE.ino`.
 For every experiment, the average sampling rate was roughly observed:
-- message length of 64 characters -> ~ 40ms sampling period
-- message length of 28 characters -> ~ 10ms sampling period
+- message length of 64 characters -> ~ 40ms sampling period.
+- message length of 28 characters -> ~ 10ms sampling period.
 
 Note that the sampling period will increase with longer messages.
 
@@ -52,8 +52,8 @@ Note that the sampling period will increase with longer messages.
 For an overview of the supported browsers, see the [browser support of the Web Bluetooth API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Bluetooth_API).
 
 Furthermore, there seems to be a limit on the maximum message length depending on the browser version:
-- Google Chrome Version 92.0 on Android only supports maximum message length of 20 characters
-- On Win10 the same version seems to work for at least up to 64 characters (true limit not measured)
+- Google Chrome Version 92.0 on Android only supports maximum message length of 20 characters.
+- On Win10 the same version seems to work for at least up to 64 characters (true limit not measured).
 
 ## 5. Contributing
 
