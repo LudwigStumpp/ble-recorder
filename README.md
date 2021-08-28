@@ -31,14 +31,14 @@ As this tool expects the data to be encoded in a message string, we next need to
 
 Then we can establish the connection, verify that the data format can be parsed and start the recording. After the recording has finished, the recorded .csv file is automatically downloaded.
 
-## 2. Notes on Performance
+## 3. Notes on Performance
 
-### 2.1 Suboptimal Encoding of Information as Strings
+### 3.1 Suboptimal Encoding of Information as Strings
 Encoding floating point and integral values in a string format is suboptimal in terms of the number of bytes required.
 However, due to the lower complexity of the web app's user interface, it was decided to support only string messages in this first version of the BLE recorder tool.
 Since any type of information can be converted to string format in some way, this solution can be used consistently.
 
-### 2.2 Performance of own Tests
+### 3.2 Performance of own Tests
 The following experiments where performed on a Arduino Nano 33 BLE Sense Board with a code similar to the provided example in `arduino/ACC_BLE.ino`.
 For every experiment, the average sampling rate was roughly observed:
 - message length of 64 characters -> ~ 40ms sampling period
@@ -46,19 +46,19 @@ For every experiment, the average sampling rate was roughly observed:
 
 Note that the sampling period will increase with longer messages.
 
-## 3. Known Issues
+## 4. Known Issues
 
-### 3.1 Browser support and maximum message length
+### 4.1 Browser support and maximum message length
 For an overview of the supported browsers, see the [browser support of the Web Bluetooth API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Bluetooth_API).
 
 Furthermore, there seems to be a limit on the maximum message length depending on the browser version:
 - Google Chrome Version 92.0 on Android only supports maximum message length of 20 characters
 - On Win10 the same version seems to work for at least up to 64 characters (true limit not measured)
 
-## 4. Contributing
+## 5. Contributing
 
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
-## 5. License
+## 6. License
 
 This software is published under the [MIT License](https://choosealicense.com/licenses/mit/).
