@@ -4,7 +4,7 @@ const app = new Vue({
     el: '#app',
     data: {
         serviceUUID: '',
-        messageFormat: 'ts;val1;val2;val3',
+        messageFormat: 'ts;accX;accY;accZ',
         delimiter: ';',
         isConnected: false,
         isRecording: false,
